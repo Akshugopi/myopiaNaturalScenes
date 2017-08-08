@@ -20,8 +20,9 @@ def readin_al_xls(filename):
     ''' readin axial length for each subject and return as pandas dataframe'''
     xls = pd.ExcelFile(filename)
     al_sheet = xls.parse(2) #get sheet 2 with AL values
-    al_sheet.columns = al_sheet.iloc[2,:] #grab
+    al_sheet.columns = al_sheet.iloc[2,:] #grab real column names
     al_sheet = al_sheet.iloc[3:]
-    al_sheet = al_sheet.loc[:,['ID','AL OD','AL OS']]
+    al_sheet = al_sheet.set_index(al_sheet.loc[:,'ID']) #use ID as row names
+    al_sheet = al_sheet.loc[:,['AL OD','AL OS']]
     al_sheet = al_sheet.dropna(how='any')
     return(al_sheet)
