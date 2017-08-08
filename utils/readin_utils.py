@@ -1,5 +1,7 @@
 import os
 import csv
+import glob
+import imghdr
 
 
 def readin_jpgs(datadir):
