@@ -4,6 +4,9 @@ import glob
 import imghdr
 import xlrd
 import pandas as pd
+import numpy as np
+from scipy.misc import imread
+
 
 
 def readin_jpgs(datadir):
@@ -15,6 +18,36 @@ def readin_jpgs(datadir):
                 if not 'Exclude' in name:
                     filelist.append(name)
     return(filelist)
+
+
+def read_ims(filelist,mindim):
+    # read in images
+    min_h = 10000
+    min_w = 10000
+
+    raws = []
+    rawfnames = []
+
+    for pf in filelist:
+        im = np.asarray(imread(pf))
+        #print(np.shape(im)[0])
+        
+        #if the dimensions are too small, don't use the photo
+        if np.shape(im)[0] > mindim and np.shape(im)[1] > mindim:
+            
+            raws.append(im)
+            rawfnames.append(pf)
+
+            #ccalc new min width and height
+            if(min_h) > np.shape(im)[0]:
+                min_h = np.shape(im)[0]
+            if(min_w) > np.shape(im)[1]:
+                min_w = np.shape(im)[1]
+        
+    #cast to an array
+    raws = np.array(raws)
+    return(raws,rawfnames,min_h,min_w)
+
 
 def readin_al_xls(filename):
     ''' readin axial length for each subject and return as pandas dataframe'''
