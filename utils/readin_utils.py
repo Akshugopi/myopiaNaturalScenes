@@ -7,8 +7,6 @@ import pandas as pd
 import numpy as np
 from scipy.misc import imread
 
-
-
 def readin_jpgs(datadir):
     ''' readin jpeg files from the specified directory, make sure they are not excluded data'''
     filelist = []
@@ -18,7 +16,6 @@ def readin_jpgs(datadir):
                 if not 'Exclude' in name:
                     filelist.append(name)
     return(filelist)
-
 
 def read_ims(filelist,mindim):
     # read in images
